@@ -3,6 +3,11 @@ KingTokens
 Tokens are a usefull way to give users access to an application. This can be for a limited time or just once.
 Just think of password resets, changing email, protected rss feed urls, timed out private links, ..
 
+This plugin consists of two parts:
+
+* an ActiveRecord model class TokenCode, which maps to the token table in the db 
+* a module Tokenizer mixed into ActiveRecord::Base, providing your models with the possibility to define tokens
+
 KingTokens map polymorphic to other objects, through the can_has_tokens :whatever_name call
 
 
@@ -42,11 +47,35 @@ class UsersController
 
 end
 
-Methods added:
+
+Token definition in AR object:
+====
+  
+  can_has_tokens :forgot_password  => add a token with the name forgot_pasword to an object.
+
+  can_has_tokens :change_email, {:days_valid => 3}  
+  => add a token with the name change email adn a default validity of 3 days to an object.	
+
+
+Methods added to the AR object:
+====
+	
   user.set_forgot_password_token  => set a new token and removing any existing one
-  user.get_forgot_password_token  => returns the token object
-  user.forgot_password_token      => returns the token string
+  user.get_forgot_password_token  => return the token object
+  user.forgot_password_token      => return the token string
   user.forgot_password_token?     => true if the user has such a token
+  
+  user.token(:forgot_password)    => return the token object found by name
+  
+  user.create_token(:token_name, :valid => 2.days.from_now)
+  => Low level function to create a token with special options overriding the ones set in the class definition
+
+Class Methods:
+====
+
+User.find_by_valid_token
+User.find_by_token
+User.find_token
 
 
 Copyright (c) 2008 Michael Bumann, Georg Leciejewski released under the MIT license
