@@ -1,0 +1,52 @@
+KingTokens
+=========
+Tokens are a usefull way to give users access to an application. This can be for a limited time or just once.
+Just think of password resets, changing email, protected rss feed urls, timed out private links, ..
+
+KingTokens map polymorphic to other objects, through the can_has_tokens :whatever_name call
+
+
+The code and the docs need some more love, until than read the tests and check coverage report in coverage/index.html
+
+
+
+Example
+=======
+
+class User
+  can_has_tokens :forgot_password
+end
+
+
+class UsersController
+
+  def lost_password
+    # form with email so user can send himself a password reset link
+    if request.post?
+     	...
+        #create users forgot_password_token
+        @user.set_forgot_password_token
+        .....
+    end
+  end
+
+  #if user is found by lost_pass_code, send him to his password_edit page
+  def change_password
+    ...
+    # identify by forgot_password_token in params[:code]
+    user = User.find_by_valid_token(:forgot_password,  params[:code])
+    user.get_forgot_password_token.use!
+    ...
+  end
+  
+
+end
+
+Methods added:
+  user.set_forgot_password_token  => set a new token and removing any existing one
+  user.get_forgot_password_token  => returns the token object
+  user.forgot_password_token      => returns the token string
+  user.forgot_password_token?     => true if the user has such a token
+
+
+Copyright (c) 2008 Michael Bumann, Georg Leciejewski released under the MIT license
