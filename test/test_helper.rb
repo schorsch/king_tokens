@@ -5,12 +5,10 @@ require 'active_support'
 
 # in active support 2.2.2 assert_difference helper has moved
 # Must find a method to detect if method can be found
-require 'active_support/testing/core_ext/test/unit/assertions'
-
-require "#{File.dirname(__FILE__)}/../lib/token_code"
-require "#{File.dirname(__FILE__)}/../lib/tokenizer"
-
-ActiveRecord::Base.send(:include, KingTokens::Tokenizer)
+require 'active_support/test_case'
+#require 'active_support/testing/assertions'
+#require ActiveSupport::TestCase
+require "#{File.dirname(__FILE__)}/../lib/king_tokens"
 
 ActiveRecord::Base.establish_connection({
     'adapter' => 'sqlite3',

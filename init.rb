@@ -1,3 +1,1 @@
-require 'token_code'
-require 'tokenizer'
-ActiveRecord::Base.send(:include, KingTokens::Tokenizer)
+require "#{File.dirname(__FILE__)}/lib/king_tokens"

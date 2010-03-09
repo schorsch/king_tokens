@@ -9,7 +9,7 @@ end
 class Article < ActiveRecord::Base; end
 
 class TokenizerTest < Test::Unit::TestCase
-  
+  include ActiveSupport::Testing::Assertions
   def test_should_respond_to_all_tokenizer_methods
     assert_respond_to User, "find_by_token"
     %w{set_forgot_password_token forgot_password_token forgot_password_token?}.each do |m|

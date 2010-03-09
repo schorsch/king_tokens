@@ -10,6 +10,12 @@ This plugin consists of two parts:
 
 KingTokens map polymorphic to other objects, through the can_has_tokens :a_tokens_name call
 
+== Install
+
+Get it as gem (hosted on gemcutter.org)
+  gem install king_tokens
+
+Or download it from github and use it as rails plugin
 
 == Example
 
