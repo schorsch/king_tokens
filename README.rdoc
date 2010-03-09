@@ -17,6 +17,8 @@ Get it as gem (hosted on gemcutter.org)
 
 Or download it from github and use it as rails plugin
 
+setup your token db like defined in the test schema => test/schema.rb
+
 == Example
 
 Define a token on a model

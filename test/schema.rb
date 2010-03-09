@@ -4,7 +4,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer :object_id
     t.string :object_type, :name, :token
     t.datetime :used_at, :valid_until
-
     t.timestamps
   end
   
