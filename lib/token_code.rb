@@ -3,8 +3,7 @@ require "digest/sha1"
 # Class to handle polymorphic tokens
 class TokenCode < ActiveRecord::Base
 
-  # kick this stament if you dont uses uuids .. or better we make a check??
-
+  #In case someone is using uuids 
   usesguid if defined?(usesguid)
 
   belongs_to :object, :polymorphic => true
@@ -29,6 +28,7 @@ class TokenCode < ActiveRecord::Base
     update_attribute(:used_at,nil)
   end
 
+  # Check if the token has already been used
   def used?
     !! read_attribute(:used_at)
   end
@@ -46,11 +46,12 @@ class TokenCode < ActiveRecord::Base
     valid? && !used? && !expired?
   end
   
-  
+  # Delete all tokens which have been used
   def self.delete_used
     delete_all "used_at IS NOT NULL"
   end
   
+  # Delete all tokens which are expired
   def self.delete_expired
     delete_all ["valid_until IS NOT NULL AND valid_until < ? ", Time.now] 
   end
