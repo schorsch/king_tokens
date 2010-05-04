@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{king_tokens}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Georg Leciejewski"]
-  s.date = %q{2010-03-09}
+  s.authors = ["Georg Leciejewski", "Michael Bumann"]
+  s.date = %q{2010-05-04}
   s.description = %q{Tokens are a usefull way to give users access to an application. This can be for a limited time or just once. Just think of password resets, changing email, protected rss feed urls, timed out private links}
   s.email = %q{gl@salesking.eu}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "coverage/lib-token_code_rb.html",
      "coverage/lib-tokenizer_rb.html",
      "init.rb",
+     "king_tokens.gemspec",
      "lib/king_tokens.rb",
      "lib/king_tokens/token_code.rb",
      "lib/king_tokens/tokenizer.rb",
@@ -50,12 +51,9 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
     else
-      s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
     end
   else
-    s.add_dependency(%q<thoughtbot-shoulda>, [">= 0"])
   end
 end
 
