@@ -3,9 +3,6 @@ require "digest/sha1"
 # Class to handle polymorphic tokens
 class TokenCode < ActiveRecord::Base
 
-  #In case someone is using uuids 
-  usesguid if defined?(usesguid)
-
   belongs_to :object, :polymorphic => true
   before_create :set_token
   
