@@ -1,5 +1,8 @@
+# encoding: utf-8
 require(File.join(File.dirname(__FILE__), 'test_helper'))
+require 'logger'
 
+ActiveRecord::Base.logger = Logger.new(STDERR)
 # TODO:
 # - make some nice mock objects!
 # - Tests still mixed for two classes
@@ -16,7 +19,7 @@ class TokenizerTest < Test::Unit::TestCase
       assert_respond_to User.new, m
     end
   end
-  
+
   def test_should_set_the_token_automatically
     user = User.create(:name=>"joe")
     assert_difference "TokenCode.count" do
@@ -30,7 +33,7 @@ class TokenizerTest < Test::Unit::TestCase
     assert_equal false, user.forgot_password_token?
     user.set_forgot_password_token
     assert user.forgot_password_token?
-    
+
   end
 
   def test_unique_name_in_polymorphic_scope
@@ -40,7 +43,7 @@ class TokenizerTest < Test::Unit::TestCase
       user.set_forgot_password_token
     end
   end
-  
+
   def test_same_token_should_be_deleted
     user = User.create(:name=>"joe")
     user.set_forgot_password_token
@@ -58,7 +61,7 @@ class TokenizerTest < Test::Unit::TestCase
     user.set_forgot_password_token
     assert_in_delta user.token(:forgot_password).valid_until.to_i, 5.days.from_now.to_i, 10
   end
-  
+
   def test_token_to_string
     user = User.create(:name=>"joe")
     user.set_forgot_password_token(:valid=>2.days)
@@ -70,7 +73,7 @@ class TokenizerTest < Test::Unit::TestCase
     user.set_forgot_password_token(:valid=>2.days)
     assert_in_delta user.token(:forgot_password).valid_until.to_i, 2.days.from_now.to_i,10
   end
-  
+
   def test_should_use_and_return_unavailable
     user = User.create(:name=>"joe")
     user.set_forgot_password_token
@@ -136,6 +139,6 @@ class TokenizerTest < Test::Unit::TestCase
     assert_equal user, User.find_by_valid_token(:forgot_password, token.token)
   end
   def test_should_not_leak_token_options
-    
+
   end
 end

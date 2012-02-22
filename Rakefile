@@ -1,23 +1,8 @@
-require 'rubygems'
 require 'rake'
+require "bundler/gem_helper"
 require 'rake/testtask'
-require 'rake/rdoctask'
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "king_tokens"
-    gem.summary = %Q{Access tokens for any active record object}
-    gem.description = %Q{Tokens are a usefull way to give users access to an application. This can be for a limited time or just once. Just think of password resets, changing email, protected rss feed urls, timed out private links}
-    gem.email = "gl@salesking.eu"
-    gem.homepage = "http://github.com/schorsch/king_tokens"
-    gem.authors = ["Georg Leciejewski", "Michael Bumann"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
-end
+require 'rdoc/task'
+Bundler::GemHelper.install_tasks
 
 desc 'Default: run unit tests.'
 task :default => :test

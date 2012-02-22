@@ -1,3 +1,4 @@
+# encoding: utf-8
 module KingTokens
   # Module which adds the token methods to the including class
   module Tokenizer

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "digest/sha1"
 
 # Class to handle polymorphic tokens
@@ -5,11 +6,11 @@ class TokenCode < ActiveRecord::Base
 
   belongs_to :object, :polymorphic => true
   before_create :set_token
-  
+
   validates_presence_of :name
   validates_format_of :name, :with => /^[a-zA-Z0-9\_\-]+$/
   validates_uniqueness_of :name, :scope => [:object_id, :object_type] #second not really needed if uuid
-  
+
   def to_s
     self.token
   end
@@ -42,17 +43,17 @@ class TokenCode < ActiveRecord::Base
   def valid_for_use?
     valid? && !used? && !expired?
   end
-  
+
   # Delete all tokens which have been used
   def self.delete_used
     delete_all "used_at IS NOT NULL"
   end
-  
+
   # Delete all tokens which are expired
   def self.delete_expired
-    delete_all ["valid_until IS NOT NULL AND valid_until < ? ", Time.now] 
+    delete_all ["valid_until IS NOT NULL AND valid_until < ? ", Time.now]
   end
-  
+
   private
 
   # Generate a token with a default length of 12.
@@ -66,7 +67,7 @@ class TokenCode < ActiveRecord::Base
     end while !validity.call(token) if block_given?
     token
   end
-  
+
   def secure_digest(*args)
      Digest::SHA1.hexdigest(args.flatten.join('--'))
    end
@@ -74,5 +75,5 @@ class TokenCode < ActiveRecord::Base
   def set_token
     self.token = generate_token { |token| TokenCode.find_by_token(token).nil? }
   end
-  
+
 end

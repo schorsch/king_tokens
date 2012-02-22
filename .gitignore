@@ -18,3 +18,6 @@ nbproject/*
 ## PROJECT::GENERAL
 rdoc
 pkg
+Gemfile.lock
+vendor/
+coverage/
