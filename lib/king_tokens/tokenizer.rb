@@ -1,11 +1,11 @@
 module KingTokens
   # Module which adds the token methods to the including class
   module Tokenizer
-    
+
     def self.included(base)
       base.extend(ClassMethods)
     end
-    
+
     module ClassMethods
 
      # Define what kind of tokens the class should have
@@ -15,11 +15,8 @@ module KingTokens
       options = tokens.extract_options!
       options[:tokens] = tokens
       options[:days_valid] ||= 5
-      options[:object_type] = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
-      
-      class_inheritable_accessor :can_has_tokens_options
-      self.can_has_tokens_options = options
-      
+      options[:object_type] = self.base_class.name.to_s
+
       has_many :token_codes, :as => :object, :dependent => :destroy
 
       extend KingTokens::Tokenizer::SingletonMethods
@@ -42,23 +39,19 @@ module KingTokens
         end
       end
      end
-     
+
     end
-   
+
     module SingletonMethods
 
       # Find a token.
       #
       # ==== Parameter
       # args<Hash{Symbol=>}>:: arguments passed to the conditions of the TokenCode.find method
-      # ==== Options (args)
-      # :object_type<String>:: the name of the object tpye, normally the class name of the related object
-      # 
       #
       # ==== Returns
       # Object:: the object to which the token belongs
       def find_token(args={})
-        args.merge!({:object_type => can_has_tokens_options[:object_type]})
         TokenCode.find(:first, :conditions => args)
       end
 
@@ -88,7 +81,7 @@ module KingTokens
         return token.object if token && token.valid_for_use?
       end
     end
-   
+
     module InstanceMethods
       # Create a token
       # ==== Parameter
@@ -104,7 +97,7 @@ module KingTokens
           self.token(name).destroy
         end
         args[:name] = "#{name}"
-        args[:valid_until] ||= (args.delete(:valid) || self.can_has_tokens_options[:days_valid].days).from_now
+        args[:valid_until] ||= ( args.delete(:valid) || 5.days ).from_now
         self.token_codes.create(args)
       end
 
@@ -114,8 +107,8 @@ module KingTokens
       def token(name)
         self.token_codes.find_by_name("#{name}")
       end
-      
+
     end
-    
+
   end #module
 end # namespace
