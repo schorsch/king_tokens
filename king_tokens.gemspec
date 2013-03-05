@@ -8,14 +8,14 @@ Gem::Specification.new do |s|
   s.description = %q{Tokens are a usefull way to give users access to an application. This can be for a limited time or just once. Just think of password resets, changing email, protected rss feed urls, timed out private links}
   s.version = KingTokens::VERSION
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Georg Leciejewski", "Michael Bumann"]
-  s.date = %q{2010-05-04}
+  s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
+  s.authors = ['Georg Leciejewski', 'Michael Bumann']
+  s.date = %q{2013-03-05}
   s.email = %q{gl@salesking.eu}
   s.homepage = %q{http://github.com/schorsch/king_tokens}
 
-  s.extra_rdoc_files = ["README.rdoc"]
-  s.require_paths = ["lib"]
+  s.extra_rdoc_files = %w(README.md)
+  s.require_paths = %w(lib)
 
   s.rubygems_version = %q{1.6.2}
 
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
 
-  s.require_paths = ["lib"]
+  s.require_paths = %w(lib)
 
   s.add_development_dependency 'test-unit'
   s.add_development_dependency 'activerecord'
