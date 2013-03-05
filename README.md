@@ -58,40 +58,51 @@ To get a full understanding of the usage also read the tests. For QM you might c
 
 ### Token definition inside an ActiveRecord object:
 
-Add a token with the name forgot_pasword to an object.
-  can_has_tokens :forgot_password
-A token with the name change email valid for 3 days
-  can_has_tokens :change_email, {:days_valid => 3}
+```ruby
+  class User
+  
+    # Adds token named forgot_pasword to an object.
+    can_has_tokens :forgot_password
+    
+    # Token named change email valid for 3 days
+    can_has_tokens :change_email, {:days_valid => 3}
+  end
+```
 
 ### Instance methods added to the ActiveRecord object:
 
-Set a new token and removing any existing one
+```ruby
+  user = User.new
+  # Set a new token and removing any existing one
   user.set_forgot_password_token
 
-Get the token string
+  #Get the token string
   user.forgot_password_token
 
-Check if the user has such a token, returns boolean true
+  # Check if the user has such a token, returns boolean true
   user.forgot_password_token?
 
-Get the token object
+  # Get the token object
   user.get_forgot_password_token
 
-Get the token object by name
+  # Get the token object by name
   user.token(:forgot_password)
 
-Low level function to create a token with special options, overriding the ones set in the class definition
+  # Low level function to create a token with special options, 
+  # overriding the ones set in the class definition
   user.create_token(:token_name, :valid => 2.days.from_now)
-
+```
 
 ### Class methods
 
-Find a user by a specific token which must be valid
+```ruby
+  # Find user by specific token which must be valid
   User.find_by_valid_token(:token_name, 'a token string')
-Find a user by specific token, without valid check
+ 
+  # Find user by specific token, without validation check
   User.find_by_token(:forgot_password, 'a token string')
 
   User.find_token
+```
 
-
-Copyright (c) 2008-2010 Michael Bumann, Georg Leciejewski released under the MIT license
+Copyright (c) 2008-2013 Michael Bumann, Georg Leciejewski released under the MIT license
