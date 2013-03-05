@@ -4,6 +4,8 @@ require "digest/sha1"
 # Class to handle polymorphic tokens
 class TokenCode < ActiveRecord::Base
 
+  attr_accessible :name, :valid_until
+
   belongs_to :object, :polymorphic => true
   before_create :set_token
 
