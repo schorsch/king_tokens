@@ -1,6 +1,6 @@
 # KingTokens
 
-Tokens are a usefull way to give users access to an application. This can be for a limited time or just once.
+Tokens are a useful way to give users access to an application. This can be for a limited time or just once.
 Just think of password resets, changing email, protected rss feed urls, timed out private links, .. KingTokens are your easy way out in such cases
 
 This plugin consists of two parts:
@@ -12,16 +12,16 @@ KingTokens map polymorphic to other objects, through the can_has_tokens :a_token
 
 ## Install
 
-Get it as gem (hosted on gemcutter.org)
-  gem install king_tokens
+Get it as gem
 
-Or download it from github and use it as rails plugin
+    gem install king_tokens
 
-setup your token db like defined in the test schema => test/schema.rb
+Setup your token database tables like defined in the test schema => test/schema.rb
 
 ## Example
 
 Define a token on a model
+
 ```ruby
   class User
     can_has_tokens :forgot_password
