@@ -56,6 +56,10 @@ class TokenCode < ActiveRecord::Base
     delete_all ["valid_until IS NOT NULL AND valid_until < ? ", Time.now]
   end
 
+  def self.find_token(token)
+    where(token: token).first
+  end
+
   private
 
   # Generate a token with a default length of 12.
@@ -75,7 +79,7 @@ class TokenCode < ActiveRecord::Base
    end
 
   def set_token
-    self.token = generate_token { |token| TokenCode.find_by_token(token).nil? }
+    self.token = generate_token { |token| TokenCode.find_token(token).nil? }
   end
 
 end

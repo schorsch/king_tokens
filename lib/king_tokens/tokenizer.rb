@@ -52,8 +52,8 @@ module KingTokens
       #
       # ==== Returns
       # Object:: the object to which the token belongs
-      def find_token(args={})
-        TokenCode.find(:first, :conditions => args)
+      def find_token(args = {})
+        TokenCode.where(args).first
       end
 
       # Find an object by its token.
@@ -64,7 +64,7 @@ module KingTokens
       #
       # ==== Returns
       # Object:: the object to which the token belongs
-      def find_by_token(name,token)
+      def find_by_token(name, token)
         token = find_token(:name => "#{name}", :token => token)
         token.object if token
       end
@@ -78,7 +78,7 @@ module KingTokens
       # ==== Returns
       # Object:: the object to which the token belongs
       def find_by_valid_token(name, token)
-        token = find_token(:name => "#{name}", :token => token)
+        token = find_token(:name => name.to_s, :token => token)
         return token.object if token && token.valid_for_use?
       end
     end
@@ -98,7 +98,7 @@ module KingTokens
           self.token(name).destroy
         end
         args[:name] = "#{name}"
-        args[:valid_until] ||= ( args.delete(:valid) || 5.days ).from_now
+        args[:valid_until] ||= (args.delete(:valid) || 5.days).from_now
         self.token_codes.create(args)
       end
 
@@ -106,7 +106,7 @@ module KingTokens
       # ==== Parameter
       # name<String/Symbol>:: The name of the token
       def token(name)
-        self.token_codes.find_by_name("#{name}")
+        self.token_codes.where(name: name.to_s).first
       end
 
     end
